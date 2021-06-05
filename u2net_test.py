@@ -51,12 +51,13 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
+import sys
 def main():
 
     # --------- 1. get image path and name ---------
     model_name='u2net'#u2netp
-
-
+    if len(sys.argv)>1:
+        model_name=sys.argv[1]
 
     image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
     prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
@@ -84,6 +85,9 @@ def main():
     elif(model_name=='u2netp'):
         print("...load U2NEP---4.7 MB")
         net = U2NETP(3,1)
+    elif(model_name=='u2net_dennisbappert'):
+        print("...load U2NET---173.6 MB (dennisbappert)")
+        net = U2NET(3,1)
 
     if torch.cuda.is_available():
         net.load_state_dict(torch.load(model_dir))
